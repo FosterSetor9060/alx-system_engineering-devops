@@ -1,4 +1,5 @@
 #!/bin/bash
+# killmenow file
 while [[ true ]]
 do
       sleep 2

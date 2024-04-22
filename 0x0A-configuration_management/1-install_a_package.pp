@@ -1,7 +1,6 @@
 #!/usr/bin/pup
 # It ensures that Flask version 2.1.0 is installed.
-
-package { 'Flask':
+package {'flask':
   ensure   => '2.1.0',
-  provider => 'pip3',
+  provider => 'pip3'
 }

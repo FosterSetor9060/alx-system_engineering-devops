@@ -25,15 +25,20 @@ if __name__ == "__main__":
         print(f"User with ID {employee_id} not found.")
         sys.exit(1)
     user = user_response.json()
-    todos_response = requests.get(url + "todos", params={"userId": employee_id})
+
+    todos_response = requests.get(
+        f"{url}todos",
+        params={"userId": employee_id}
+    )
     if todos_response.status_code != 200:
         print("Error fetching todos.")
         sys.exit(1)
     todos = todos_response.json()
 
     completed = [t.get("title") for t in todos if t.get("completed") is True]
-    print("Employee {} is done with tasks({}/{}):".format(
-        user.get("name"), len(completed), len(todos)))
+    print(
+        f"Employee {user.get('name')} is done with tasks"
+        f"({len(completed)}/{len(todos)}):"
+    )
     for complete in completed:
-        print("\t {}".format(complete))
-
+        print(f"\t {complete}")

@@ -1,31 +1,39 @@
 #!/usr/bin/python3
 """
 For the script, uses this REST API, for a given employee ID, returns
-information about his/her TODO l
+information about his/her TODO list progress.
 """
 
-import re
 import requests
 import sys
 
-REST_API = "https://jsonplaceholder.typicode.com"
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python3 0-gather_data_from_an_API.py <employee_id>")
+        sys.exit(1)
 
-if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        if re.fullmatch(r'\d+', sys.argv[1]):
-            id = int(sys.argv[1])
-            req = requests.get('{}/users/{}'.format(REST_API, id)).json()
-            task_req = requests.get('{}/todos'.format(REST_API)).json()
-            emp_name = req.get('name')
-            tasks = list(filter(lambda x: x.get('userId') == id, task_req))
-            completed_tasks = list(filter(lambda x: x.get('completed'), tasks))
-            print(
-                'Employee {} is done with tasks({}/{}):'.format(
-                    emp_name,
-                    len(completed_tasks),
-                    len(tasks)
-                )
-            )
-            if len(completed_tasks) > 0:
-                for task in completed_tasks:
-                    print('\t {}'.format(task.get('title')
+    try:
+        employee_id = int(sys.argv[1])
+    except ValueError:
+        print("Employee ID must be an integer")
+        sys.exit(1)
+
+    # Base URL for the JSONPlaceholder API
+    url = "https://jsonplaceholder.typicode.com/"
+    user_response = requests.get(url + "users/{}".format(employee_id))
+    if user_response.status_code != 200:
+        print(f"User with ID {employee_id} not found.")
+        sys.exit(1)
+    user = user_response.json()
+    todos_response = requests.get(url + "todos", params={"userId": employee_id})
+    if todos_response.status_code != 200:
+        print("Error fetching todos.")
+        sys.exit(1)
+    todos = todos_response.json()
+
+    completed = [t.get("title") for t in todos if t.get("completed") is True]
+    print("Employee {} is done with tasks({}/{}):".format(
+        user.get("name"), len(completed), len(todos)))
+    for complete in completed:
+        print("\t {}".format(complete))
+

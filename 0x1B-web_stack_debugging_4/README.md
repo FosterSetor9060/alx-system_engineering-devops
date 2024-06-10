@@ -1,4 +1,9 @@
 0x1B. Web Stack Debugging #4
+Debugging refers to identifying and fixing issues in a web application or server stack. The goal is to ensure smooth operation and optimal performance. Here are some key points from the Web Stack Debugging #4:
+
+Simulating HTTP Requests: The video demonstrates simulating HTTP requests to a web server. For example, making 2000 requests to a server with 100 requests at a time. The video shows that 943 requests failed. The goal is to fix the stack to achieve zero failures. Remember, when something goes wrong, logs are your best friends!
+Install ‘puppet-lint’: The README mentions installing puppet-lint, a tool for checking Puppet manifests. You can install it using the following commands:
+
 Task Description
 In this web stack debugging task, we are testing how well our web server setup featuring Nginx is performing under pressure. Unfortunately, it’s not doing well, as we’re experiencing a large number of failed requests.
 

@@ -1,0 +1,47 @@
+# Default server configuration
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name _;  # To listen on all available IPv4 and IPv6 addresses
+
+    # Root directory and index files
+    root /var/www/html;
+    index index.html index.htm;
+
+    # Add custom header
+    add_header X-Served-By 423066-web-01;
+
+    # Location block for static files served by Flask
+    location /hbnb_static {
+        alias /data/web_static/current;
+        index index.html index.htm;
+    }
+
+    # Redirect location
+    location /redirect_me {
+        return 301 http://cuberule.com/;
+    }
+
+    # Error pages configuration
+    error_page 404 /404.html;
+    location = /404.html {
+        root /var/www/html;
+        internal;
+    }
+
+    # Proxy configuration for dynamic content
+    location /airbnb-dynamic/number_odd_or_even/ {
+        proxy_pass http://127.0.0.1:5001;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Default location block
+    location / {
+        # First attempt to serve request as file, then
+        # as directory, then fall back to displaying a 404.
+        try_files $uri $uri/ =404;
+    }
+}

@@ -1,0 +1,32 @@
+#server nginx config_appserver
+
+server {
+    listen 80;
+    server_name 100.25.153.16;
+
+    location /hbnb_static {
+        alias /data/web_static/current/;
+    }
+
+    location /airbnb-onepage/ {
+        proxy_pass http://127.0.0.1:5001;  # Update the port number here if it changed
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location /redirect_me {
+        return 301 https://www.youtube.com/watch?v=hzaQg6jtOnY;
+    }
+
+    error_page 404 /my_404.html;
+    location = /my_404.html {
+        root /usr/share/nginx/html;
+        internal;
+    }
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}

@@ -32,11 +32,7 @@ Read or watch:
 - The second line of all your Bash scripts should be a comment explaining what the script is doing.
 
 ### Your servers
-| Name           | Username | IP             | State   |
-|----------------|----------|----------------|---------|
-| 423066-web-01  | ubuntu   | 100.25.153.16  | running |
-| 423066-web-02  | ubuntu   | 100.25.156.205 | running |
-| 423066-lb-01   | ubuntu   | 34.207.222.185 | running |
+| Name           | Username | IP             | State   
 
 ## Tasks
 ### 0. Set up development with Python (mandatory)
@@ -48,6 +44,16 @@ Let’s serve what you built for AirBnB clone v2 - Web framework on `web-01`. Th
 - Git clone your `AirBnB_clone_v2` on your `web-01` server.
 - Configure the file `web_flask/0-hello_route.py` to serve its content from the route `/airbnb-onepage/` on port 5000.
 - Your Flask application object must be named `app` (This will allow us to run and check your code).
+
+- Python 3
+- Ubuntu 16.04 LTS
+
+## Setup Instructions
+1. Install necessary packages
+2. Clone the repository
+3. Configure Flask application
+4. Set up Gunicorn
+5. Configure Nginx
 
 **Example:**
 Author: Foster Setor
